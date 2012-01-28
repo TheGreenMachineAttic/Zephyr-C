@@ -62,28 +62,28 @@ void OperatorControl(void)
 		RegulateSpeed(speed);
 		if (leftstick.GetY() == 1 && rightstick.GetY() == 1)
 		{
-			leftjagBack.Set(speed);
+			leftjagFront.Set(speed);
 			leftjagBack.Set(speed);
 			rightjagFront.Set(speed);
 			rightjagBack.Set(speed);
 		}
 		if (leftstick.GetY() == -1 || rightstick.GetY() == 1)
 		{
-			leftjagBack.Set(-speed);
+			leftjagFront.Set(-speed);
 			leftjagBack.Set(-speed);
 			rightjagFront.Set(speed);
 			rightjagBack.Set(speed);
 		}
 		if (leftstick.GetY() == 1 || rightstick.GetY() == -1)
 		{
-			leftjagBack.Set(speed);
+			leftjagFront.Set(speed);
 			leftjagBack.Set(speed);
 			rightjagFront.Set(-speed);
 			rightjagBack.Set(-speed);
 		}
 		if (leftstick.GetY() == -1 && rightstick.GetY() == -1)
 		{
-			leftjagBack.Set(-speed);
+			leftjagFront.Set(-speed);
 			leftjagBack.Set(-speed);
 			rightjagFront.Set(-speed);
 			rightjagBack.Set(-speed);

@@ -13,9 +13,9 @@ float speed;
 
 public:
 RobotDemo(void):
-myRobot(1, 2, 3, 4),
+myRobot(2,1),
 gamepad(1),
-shooter(5),
+shooter(3),
 comp(1, 1),
 rel(2)
 {
@@ -49,17 +49,29 @@ void OperatorControl(void)
 	myRobot.SetSafetyEnabled(true);
 	while (IsOperatorControl())
 	{
-		myRobot.TankDrive(gamepad.GetLeftY(), gamepad.GetRightY()); 
-		RegulateSpeed(speed);
-		
-		if (gamepad.GetRawButton(7))
-		{
-			rel.Set(Relay::kForward);
-		}
+		myRobot.TankDrive((gamepad.GetLeftY()*(-1)), gamepad.GetRightY()); 
+		//RegulateSpeed(speed);
 		
 		if (gamepad.GetRawButton(8))
 		{
-			shooter.Set(0.435);
+			rel.Set(Relay::kForward);
+		}
+		if (gamepad.GetRawButton(6))
+		{
+			rel.Set(Relay::kOff);
+		}
+		
+		if (gamepad.GetRawButton(7))
+		{
+			shooter.Set(-0.5);
+		}
+		if (gamepad.GetRawButton(1))
+		{
+			shooter.Set(-1);
+		}
+		if (gamepad.GetRawButton(2))
+		{
+			shooter.Set(0);
 		}
 		Wait(0.005);
 		}

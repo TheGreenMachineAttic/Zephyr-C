@@ -52,16 +52,17 @@ void OperatorControl(void)
 		myRobot.TankDrive((gamepad.GetLeftY()*(-1)), gamepad.GetRightY()); 
 		//RegulateSpeed(speed);
 		
-		if (gamepad.GetRawButton(8))
+		comp.Start();
+		
+		if (gamepad.GetRawButton(5))
 		{
 			rel.Set(Relay::kForward);
 		}
-		if (gamepad.GetRawButton(6))
+		if (gamepad.GetRawButton(7))
 		{
 			rel.Set(Relay::kOff);
 		}
-		
-		if (gamepad.GetRawButton(7))
+		if (gamepad.GetRawButton(6))
 		{
 			shooter.Set(-0.5);
 		}

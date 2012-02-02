@@ -10,19 +10,34 @@ Jaguar shooter;
 Compressor comp;
 Relay rel;
 float speed;
-
+const float shooterStep;
+Relay::Value pistonPosition;
+float leftSpeed;
+float rightSpeed;
 public:
 RobotDemo(void):
-myRobot(2,1),
+myRobot(2, 1),
 gamepad(1),
+comp(1,1),
 shooter(3),
-comp(1, 1),
-rel(2)
+rel(2),
+speed(0),
+shooterStep(0.01),
+pistonPosition(Relay::kOff),
+leftSpeed(0.0),
+rightSpeed(0.0)
 {
 	myRobot.SetExpiration(0.1);
 	comp.Start();
+	myRobot.SetSafetyEnabled(true);
 }
 
+void mechanismSet()
+{
+	shooter.Set(speed);
+	myRobot.TankDrive(leftSpeed, rightSpeed);
+	rel.Set(pistonPosition);
+}
 
 void Autonomous(void)
 {
@@ -46,33 +61,41 @@ float RegulateSpeed (float speed)
 }
 
 void OperatorControl(void)
-{ 
-	myRobot.SetSafetyEnabled(true);
+{
+
 	while (IsOperatorControl())
 	{
-		myRobot.TankDrive((gamepad.GetLeftY()*(-1)), gamepad.GetRightY()); 
+		
 		//RegulateSpeed(speed);
+		//if (leftstick.GetY() == 1 && rightstick.GetY() == 1)
+		leftSpeed= gamepad.GetLeftY()*(-1);
+		rightSpeed = gamepad.GetRightY();
 		
 		if (gamepad.GetRawButton(5))
 		{
-			rel.Set(Relay::kForward);
+			pistonPosition = Relay::kReverse;
 		}
-		if (gamepad.GetRawButton(7))
-		{
-			rel.Set(Relay::kOff);
+		else{
+			pistonPosition = Relay::kForward;
 		}
+		
 		if (gamepad.GetRawButton(6))
 		{
-			shooter.Set(-0.5);
+			speed+=shooterStep;
+		}
+		if (gamepad.GetRawButton(8))
+		{
+			speed -=shooterStep;
 		}
 		if (gamepad.GetRawButton(1))
 		{
-			shooter.Set(-1);
+			speed=-1;
 		}
 		if (gamepad.GetRawButton(2))
 		{
-			shooter.Set(0);
+			speed=0;
 		}
+		mechanismSet();
 		Wait(0.005);
 		}
 	}

@@ -14,7 +14,6 @@ const float shooterStep;
 Relay::Value pistonPosition;
 float leftSpeed;
 float rightSpeed;
-
 public:
 RobotDemo(void):
 myRobot(2, 1),
@@ -36,7 +35,8 @@ rightSpeed(0.0)
 void mechanismSet()
 {
 	shooter.Set(speed);
-	myRobot.TankDrive(leftSpeed, rightSpeed); 
+	myRobot.TankDrive(leftSpeed, rightSpeed);
+	rel.Set(pistonPosition);
 }
 
 void Autonomous(void)
@@ -73,10 +73,10 @@ void OperatorControl(void)
 		
 		if (gamepad.GetRawButton(5))
 		{
-			pistonPosition = Relay::kForward;
+			pistonPosition = Relay::kReverse;
 		}
 		else{
-			pistonPosition = Relay::kOff;
+			pistonPosition = Relay::kForward;
 		}
 		
 		if (gamepad.GetRawButton(6))

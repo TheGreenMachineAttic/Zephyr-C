@@ -6,6 +6,7 @@ class RobotDemo : public SimpleRobot
 {
 RobotDrive myRobot;
 GamepadL gamepad; 
+GamepadL gamepad2;
 Jaguar shooter;
 Compressor comp;
 Relay rel;
@@ -14,10 +15,12 @@ const float shooterStep;
 Relay::Value pistonPosition;
 float leftSpeed;
 float rightSpeed;
+bool is1Stick;
 public:
 RobotDemo(void):
 myRobot(2, 1),
 gamepad(1),
+gamepad2(2),
 comp(1,1),
 shooter(3),
 rel(2),
@@ -25,7 +28,8 @@ speed(0),
 shooterStep(0.01),
 pistonPosition(Relay::kOff),
 leftSpeed(0.0),
-rightSpeed(0.0)
+rightSpeed(0.0),
+is1Stick(false)
 {
 	myRobot.SetExpiration(0.1);
 	comp.Start();
@@ -35,8 +39,15 @@ rightSpeed(0.0)
 void mechanismSet()
 {
 	shooter.Set(speed);
+	if(!is1Stick)
+	{
 	myRobot.TankDrive(leftSpeed, rightSpeed);
+	}
+	else{
+		myRobot.TankDrive(leftSpeed, leftSpeed);
+	}
 	rel.Set(pistonPosition);
+	
 }
 
 void Autonomous(void)
@@ -94,6 +105,10 @@ void OperatorControl(void)
 		if (gamepad.GetRawButton(2))
 		{
 			speed=0;
+		}
+		if (gamepad.GetRawButton(9))
+		{
+			is1Stick=!is1Stick;
 		}
 		mechanismSet();
 		Wait(0.005);

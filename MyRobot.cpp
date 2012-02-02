@@ -20,6 +20,7 @@ comp(1, 1),
 rel(2)
 {
 	myRobot.SetExpiration(0.1);
+	comp.Start();
 }
 
 
@@ -51,8 +52,6 @@ void OperatorControl(void)
 	{
 		myRobot.TankDrive((gamepad.GetLeftY()*(-1)), gamepad.GetRightY()); 
 		//RegulateSpeed(speed);
-		
-		comp.Start();
 		
 		if (gamepad.GetRawButton(5))
 		{

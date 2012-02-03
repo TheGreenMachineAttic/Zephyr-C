@@ -16,6 +16,10 @@ Relay::Value pistonPosition;
 float leftSpeed;
 float rightSpeed;
 bool is1Stick;
+AnalogChannel sonar;
+float sonarVal;
+DriverStation *driverStation;
+
 public:
 RobotDemo(void):
 myRobot(2, 1),
@@ -29,7 +33,11 @@ shooterStep(0.01),
 pistonPosition(Relay::kOff),
 leftSpeed(0.0),
 rightSpeed(0.0),
-is1Stick(false)
+is1Stick(false),
+sonar(1),
+sonarVal(0.0),
+driverStation(DriverStation::GetInstance())
+
 {
 	myRobot.SetExpiration(0.1);
 	comp.Start();
@@ -47,7 +55,8 @@ void mechanismSet()
 		myRobot.TankDrive(leftSpeed, leftSpeed);
 	}
 	rel.Set(pistonPosition);
-	
+	cout<<sonarVal<<endl;
+	//makes things look neater
 }
 
 void Autonomous(void)
@@ -81,7 +90,7 @@ void OperatorControl(void)
 		//if (leftstick.GetY() == 1 && rightstick.GetY() == 1)
 		leftSpeed= gamepad.GetLeftY()*(-1);
 		rightSpeed = gamepad.GetRightY();
-		
+		//movement control 
 		if (gamepad.GetRawButton(5))
 		{
 			pistonPosition = Relay::kReverse;
@@ -89,27 +98,28 @@ void OperatorControl(void)
 		else{
 			pistonPosition = Relay::kForward;
 		}
-		
+		//fires piston used in the shooter to feed the ball at a constant speed
 		if (gamepad.GetRawButton(6))
 		{
-			speed+=shooterStep;
+			speed+=shooterStep;    //increaces the shooter speed
 		}
 		if (gamepad.GetRawButton(8))
 		{
-			speed -=shooterStep;
+			speed -=shooterStep;   //lowers the shooter speed
 		}
 		if (gamepad.GetRawButton(1))
 		{
-			speed=-1;
+			speed=-1;    //turns the shooter on to full
 		}
 		if (gamepad.GetRawButton(2))
 		{
-			speed=0;
+			speed=0;     //turns the shooter off
 		}
 		if (gamepad.GetRawButton(9))
 		{
-			is1Stick=!is1Stick;
+			is1Stick=!is1Stick;   //makes it so you can drive the robot with just the left stick
 		}
+		sonarVal=sonar.GetAverageValue();   //sonar?
 		mechanismSet();
 		Wait(0.005);
 		}

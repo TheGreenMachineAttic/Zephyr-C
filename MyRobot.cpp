@@ -1,7 +1,7 @@
 #include "WPILib.h"
 #include "GamePadL.h"
 
-const FSpeed = 1.0;
+const int FSpeed = 1.0;
 
 
 class RobotDemo : public SimpleRobot

@@ -1,17 +1,33 @@
 #include "WPILib.h"
 #include "GamePadL.h"
 #include "Components.h"
+#include "ToggleButtonHelper.h"
 
 
 class RobotDemo : public SimpleRobot
 {
-	float shooterSpeed;
-	const float shooterStep;
-	Relay::Value pistonPosition;
+	//Driving Variables
 	float leftSpeed;
 	float rightSpeed;
 	float oneStick;
+	
+	//Slow Speed Variables
+	ToggleHelper button3Toggle;
+	float speedFactor;
+	//Shooter Speed
+	float shooterSpeed;
+	const float shooterStep;
+	
+	//Filters Variables
+	
+	//Camera Variables
+	
+	//Sonar Variables
 	float sonarVal;
+	
+	//Shooter Piston Variables
+	Relay::Value pistonPosition;
+	
 	Components components;
 	
 public:
@@ -22,16 +38,19 @@ public:
 		leftSpeed(0.0),
 		rightSpeed(0.0),
 		oneStick(0.0),
-		sonarVal(0.0)
+		sonarVal(0.0),
+		speedFactor(1.0),
+		button3Toggle(ToggleHelper())
 	{
 		components.myRobot.SetExpiration(0.1);
 		components.comp.Start();
 		components.myRobot.SetSafetyEnabled(true);
 	}
 
-void mechanismSet()
+void mechanismSet() //makes things look neater
 {
 	components.shooter.Set(shooterSpeed);
+	
 	if(oneStick <.03 && oneStick>-.03)
 	{
 	components.myRobot.TankDrive(leftSpeed, rightSpeed);
@@ -40,10 +59,11 @@ void mechanismSet()
 		components.myRobot.TankDrive(oneStick/2, -1*oneStick/2);
 	}
 	components.piston.Set(pistonPosition);
-	cout<<sonarVal<<endl;
-	//makes things look neater
+	
+	
 }
 
+//Stop all motors
 void stop()
 {
 	pistonPosition = Relay::kForward;
@@ -51,6 +71,7 @@ void stop()
 	rightSpeed = 0.0;
 	oneStick = 0.0;
 	shooterSpeed = 0.0;
+	mechanismSet();
 }
 //DON"T RUN THIS. SERIOUSLY BAD IDEA
 void Autonomous(void)
@@ -79,11 +100,9 @@ void OperatorControl(void)
 
 	while (IsOperatorControl())
 	{
-		//RegulateSpeed(speed);
-		//if (leftstick.GetY() == 1 && rightstick.GetY() == 1)
-		leftSpeed= components.gamepad1.GetLeftY()*(-1);
-		rightSpeed = components.gamepad1.GetRightY();
-		oneStick = components.gamepad1.GetDpadY();
+		leftSpeed= components.gamepad1.GetLeftY()*(-1)*speedFactor;
+		rightSpeed = components.gamepad1.GetRightY()*speedFactor;
+		oneStick = components.gamepad1.GetDpadY()*speedFactor;
 		//movement control 
 		if (components.gamepad1.GetRawButton(5))
 		{
@@ -109,7 +128,17 @@ void OperatorControl(void)
 		{
 			shooterSpeed=0;     //turns the shooter off
 		}
-		sonarVal= components.sonar.GetAverageValue();   //sonar?
+		if(button3Toggle.isToggleReady(components.gamepad1.GetRawButton(3)))
+		{
+			if(speedFactor == 1)
+			{
+				speedFactor = .5;
+			}
+			if(speedFactor == .5){
+				speedFactor = 1;
+			}
+		}
+		sonarVal= components.sonar.GetValue();   //sonar
 		mechanismSet();
 		Wait(0.005);
 		}

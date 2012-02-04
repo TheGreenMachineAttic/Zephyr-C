@@ -22,7 +22,7 @@ public:
 		Jaguar shooter;
 		Compressor comp;
 		Relay piston;
-		
+		DriverStation *driveStation;
 		AnalogChannel sonar;
 
 		Components():

@@ -5,7 +5,7 @@
 *.d
 *.out
 *.c
-*/Makefile
+Makefile
 # Compiled Dynamic libraries
 *.so
 

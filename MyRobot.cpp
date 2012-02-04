@@ -1,19 +1,21 @@
 #include "WPILib.h"
 #include "GamePadL.h"
 
+const FSpeed = 1.0;
+
 
 class RobotDemo : public SimpleRobot
 {
-RobotDrive myRobot;
-GamepadL gamepad; 
-Jaguar shooter;
-Compressor comp;
-Relay rel;
-float speed;
-const float shooterStep;
-Relay::Value pistonPosition;
-float leftSpeed;
-float rightSpeed;
+	RobotDrive myRobot;
+	GamepadL gamepad; 
+	Jaguar shooter;
+	Compressor comp;
+	Relay rel;
+	float speed;
+	const float shooterStep;
+	Relay::Value pistonPosition;
+	float leftSpeed;
+	float rightSpeed;
 public:
 RobotDemo(void):
 myRobot(2, 1),
@@ -49,13 +51,13 @@ void Autonomous(void)
 
 float RegulateSpeed (float speed)
 {
-	if (speed > 1.0)
+	if (speed > FSpeed)
 	{
-		speed = 1.0;
+		speed = FSpeed;
 	} 
-	if (speed < -1.0)
+	if (speed < -FSpeed)
 	{
-		speed = -1.0;
+		speed = -FSpeed;
 	}
 	return speed;
 }

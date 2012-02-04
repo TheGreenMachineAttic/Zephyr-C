@@ -2,7 +2,8 @@
 #include "GamePadL.h"
 #include "Components.h"
 #include "ToggleButtonHelper.h"
-
+#include "Filter.h"
+#include <sstream>
 
 class RobotDemo : public SimpleRobot
 {
@@ -25,12 +26,15 @@ class RobotDemo : public SimpleRobot
 	
 	//Sonar Variables
 	float sonarVal;
-	
+	Filter sonarFilter;
 	//Shooter Piston Variables
 	Relay::Value pistonPosition;
 	
+	//Components
 	Components components;
 	
+	//Driver Station
+	DriverStationLCD *driverStation;
 public:
 	RobotDemo(void):
 		leftSpeed(0.0),
@@ -40,17 +44,21 @@ public:
 		shooterSpeed(0),
 		shooterStep(0.01),
 		sonarVal(0.0),
+		sonarFilter(Filter::getInstance(100)),
 		pistonPosition(Relay::kOff)
 	{
+		driverStation = DriverStationLCD::GetInstance();
 		components.myRobot.SetExpiration(0.1);
-		components.comp.Start();
+		//components.comp.Start();
 		components.myRobot.SetSafetyEnabled(true);
 	}
 
 void mechanismSet() //makes things look neater
 {
-	components.shooter.Set(shooterSpeed);
+	//Set the shooter
+/*	components.shooter.Set(shooterSpeed);
 	
+	//Driving Logic for One Stick Drive
 	if(oneStick == 0)
 	{
 	components.myRobot.TankDrive(leftSpeed * speedFactor, rightSpeed * speedFactor);
@@ -59,7 +67,13 @@ void mechanismSet() //makes things look neater
 		components.myRobot.TankDrive((oneStick * speedFactor)/2, -1*((speedFactor*oneStick)/2));
 	}
 	components.piston.Set(pistonPosition);
-	
+	*/
+	//Output data to the Driver Station
+	std::ostringstream convert;
+	convert<<sonarVal;
+	string sonarOutput = "Sonar reads: " +  convert.str();
+	driverStation->PrintfLine(DriverStationLCD::kUser_Line2, &sonarOutput[0]);
+	driverStation->UpdateLCD();
 	
 }
 
@@ -71,6 +85,7 @@ void stop()
 	rightSpeed = 0.0;
 	oneStick = 0.0;
 	shooterSpeed = 0.0;
+	
 	mechanismSet();
 }
 //DON"T RUN THIS. SERIOUSLY BAD IDEA

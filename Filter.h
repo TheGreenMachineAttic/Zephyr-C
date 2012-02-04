@@ -3,7 +3,7 @@
 
 class Filter{
 public:
-	Filter getInstance(int size);
+	static Filter getInstance(int size);
 	float filter(float value);
 private:
 	float values[];

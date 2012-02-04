@@ -25,7 +25,7 @@ void Filter::shiftArray()
 	{
 		tempArray[counter] = values[counter-1];
 	}
-	for(int counter = 0; counter<sizeof(values)/sizeof(values); counter++)
+	for(unsigned counter = 0; counter<sizeof(values)/sizeof(values); counter++)
 		{
 			values[counter] = tempArray[counter];
 		}

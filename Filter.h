@@ -1,13 +1,16 @@
+
+
 #ifndef FILTER_H
 #define FILTER_H
 
+const int SIZE = 100;
+
 class Filter{
 public:
-	static Filter getInstance(int size);
 	float filter(float value);
+	Filter();
 private:
-	float values[];
-	Filter(float tap[]);
+	float values[SIZE];
 	void shiftArray();
 };
 

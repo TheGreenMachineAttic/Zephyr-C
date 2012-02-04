@@ -27,6 +27,7 @@ class RobotDemo : public SimpleRobot
 	//Sonar Variables
 	float sonarVal;
 	Filter sonarFilter;
+	static const int SONAR_OFFSET = 5;
 	//Shooter Piston Variables
 	Relay::Value pistonPosition;
 	
@@ -44,7 +45,6 @@ public:
 		shooterSpeed(0),
 		shooterStep(0.01),
 		sonarVal(0.0),
-		sonarFilter(Filter::getInstance(100)),
 		pistonPosition(Relay::kOff)
 	{
 		driverStation = DriverStationLCD::GetInstance();
@@ -73,6 +73,9 @@ void mechanismSet() //makes things look neater
 	convert<<sonarVal;
 	string sonarOutput = "Sonar reads: " +  convert.str();
 	driverStation->PrintfLine(DriverStationLCD::kUser_Line2, &sonarOutput[0]);
+	driverStation->PrintfLine(DriverStationLCD::kUser_Line3, "Test Test");
+	convert<<speedFactor;
+	driverStation->PrintfLine(DriverStationLCD::kUser_Line4, &(convert.str()[0]));
 	driverStation->UpdateLCD();
 	
 }
@@ -93,7 +96,7 @@ void Autonomous(void)
 {
 	components.myRobot.SetSafetyEnabled(false);
 	components.myRobot.Drive(0.5, 0.0); 
-	Wait(2.0); //    for 2 seconds
+	Wait(20.0); //    for 2 seconds
 	components.myRobot.Drive(0.0, 0.0);
 }
 
@@ -153,7 +156,8 @@ void OperatorControl(void)
 				speedFactor = 1;
 			}
 		}
-		sonarVal= components.sonar.GetValue();   //sonar
+		sonarVal= sonarFilter.filter(components.sonar.GetValue())/2 + SONAR_OFFSET;  
+		//sonarVal = components.sonar.GetValue()/2;//sonar
 		mechanismSet();
 		Wait(0.005);
 		}

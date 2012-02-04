@@ -1,33 +1,24 @@
 #include "Filter.h"
 
-Filter Filter::getInstance(int size)
-{
-	float tempValues[size];
-	for(int counter = 0; counter<size; counter++)
-	{
-		tempValues[counter] = 0;
-	}
-	return Filter(tempValues);
-}
 
-Filter::Filter(float tempValues[])
+Filter::Filter()
 {
-	for(int counter = 0; counter<sizeof(tempValues)/sizeof(float); counter++)
+	for(int counter = 0; counter<SIZE; counter++)
 	{
-		values[counter] = tempValues[counter];
+		values[counter] = 0;
 	}
 }
 
 void Filter::shiftArray()
 {
-	float tempArray[sizeof(values)/sizeof(float)];
-	for(int counter = 1; counter<sizeof(values)/sizeof(float); counter++)
-	{
-		tempArray[counter] = values[counter-1];
-	}
-	for(unsigned counter = 0; counter<sizeof(values)/sizeof(values); counter++)
+	float tempArray[SIZE];
+	for(int counter = 0; counter<SIZE; counter++)
 		{
-			values[counter] = tempArray[counter];
+			tempArray[counter] = values[counter];
+		}
+	for(int counter = 0; counter<SIZE; counter++)
+		{
+			values[counter] = tempArray[counter-1];
 		}
 }
 
@@ -36,9 +27,9 @@ float Filter::filter(float value)
 	shiftArray();
 	values[0] = value;
 	float total = 0.0;
-	for(int counter = 0; counter<sizeof(values)/sizeof(float); counter++)
+	for(int counter = 0; counter<SIZE; counter++)
 	{
-		total+=values[counter]/(sizeof(values)/sizeof(float));
+		total+=values[counter];
 	}
-	return total;
+	return (total/SIZE);
 }

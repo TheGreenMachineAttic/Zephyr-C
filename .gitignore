@@ -2,7 +2,10 @@
 *.slo
 *.lo
 *.o
-
+*.d
+*.out
+*.c
+*/Makefile
 # Compiled Dynamic libraries
 *.so
 

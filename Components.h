@@ -29,8 +29,8 @@ public:
 			myRobot(leftMotors,rightMotors),
 			gamepad1(gamepad1Input),
 			gamepad2(gamepad2Input),
-			comp(compInput,compSpike),
 			shooter(shooterJaguar),
+			comp(compInput,compSpike),
 			piston(pistonInput),
 			sonar(sonarInput)
 			{}

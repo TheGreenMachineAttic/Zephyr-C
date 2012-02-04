@@ -14,6 +14,7 @@ class RobotDemo : public SimpleRobot
 	//Slow Speed Variables
 	ToggleHelper button3Toggle;
 	float speedFactor;
+	
 	//Shooter Speed
 	float shooterSpeed;
 	const float shooterStep;
@@ -32,15 +33,14 @@ class RobotDemo : public SimpleRobot
 	
 public:
 	RobotDemo(void):
-		shooterSpeed(0),
-		shooterStep(0.01),
-		pistonPosition(Relay::kOff),
 		leftSpeed(0.0),
 		rightSpeed(0.0),
 		oneStick(0.0),
-		sonarVal(0.0),
 		speedFactor(1.0),
-		button3Toggle(ToggleHelper())
+		shooterSpeed(0),
+		shooterStep(0.01),
+		sonarVal(0.0),
+		pistonPosition(Relay::kOff)
 	{
 		components.myRobot.SetExpiration(0.1);
 		components.comp.Start();
@@ -51,12 +51,12 @@ void mechanismSet() //makes things look neater
 {
 	components.shooter.Set(shooterSpeed);
 	
-	if(oneStick <.03 && oneStick>-.03)
+	if(oneStick == 0)
 	{
-	components.myRobot.TankDrive(leftSpeed, rightSpeed);
+	components.myRobot.TankDrive(leftSpeed * speedFactor, rightSpeed * speedFactor);
 	}
 	else{
-		components.myRobot.TankDrive(oneStick/2, -1*oneStick/2);
+		components.myRobot.TankDrive((oneStick * speedFactor)/2, -1*((speedFactor*oneStick)/2));
 	}
 	components.piston.Set(pistonPosition);
 	
@@ -100,9 +100,9 @@ void OperatorControl(void)
 
 	while (IsOperatorControl())
 	{
-		leftSpeed= components.gamepad1.GetLeftY()*(-1)*speedFactor;
-		rightSpeed = components.gamepad1.GetRightY()*speedFactor;
-		oneStick = components.gamepad1.GetDpadY()*speedFactor;
+		leftSpeed= components.gamepad1.GetLeftY()*(-1);
+		rightSpeed = components.gamepad1.GetRightY();
+		oneStick = components.gamepad1.GetDpadY();
 		//movement control 
 		if (components.gamepad1.GetRawButton(5))
 		{

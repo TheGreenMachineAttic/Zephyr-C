@@ -11,7 +11,7 @@ class RobotDemo : public SimpleRobot
 	float leftSpeed;
 	float rightSpeed;
 	float oneStick;
-	
+	 
 	//Slow Speed Variables
 	ToggleHelper button3Toggle;
 	float speedFactor;

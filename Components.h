@@ -6,8 +6,8 @@
 
 class Components{
 private:
-	static const int leftMotors = 2;
-	static const int rightMotors = 1;
+	static const int leftMotors = 3;
+	static const int rightMotors = 4;
 	static const int gamepad1Input = 1;
 	static const int gamepad2Input = 2;
 	static const int compInput = 1;

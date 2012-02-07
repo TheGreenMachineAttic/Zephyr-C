@@ -19,9 +19,7 @@ class RobotDemo : public SimpleRobot
 	//Shooter Speed
 	float shooterSpeed;
 	const float shooterStep;
-	
-	//Filters Variables
-	
+		
 	//Camera Variables
 	
 	//Sonar Variables
@@ -49,7 +47,7 @@ public:
 	{
 		driverStation = DriverStationLCD::GetInstance();
 		components.myRobot.SetExpiration(0.1);
-		//components.comp.Start();
+		components.comp.Start();
 		components.myRobot.SetSafetyEnabled(true);
 	}
 
@@ -61,7 +59,7 @@ void mechanismSet() //makes things look neater
 	//Driving Logic for One Stick Drive
 	if(oneStick == 0)
 	{
-	components.myRobot.TankDrive(leftSpeed * speedFactor, rightSpeed * speedFactor);
+	components.myRobot.TankDrive(leftSpeed, rightSpeed);
 	}
 	else{
 		components.myRobot.TankDrive((oneStick * speedFactor)/2, -1*((speedFactor*oneStick)/2));
@@ -74,8 +72,10 @@ void mechanismSet() //makes things look neater
 	string sonarOutput = "Sonar reads: " +  convert.str();
 	driverStation->PrintfLine(DriverStationLCD::kUser_Line2, &sonarOutput[0]);
 	driverStation->PrintfLine(DriverStationLCD::kUser_Line3, "Test Test");
-	convert<<speedFactor;
-	driverStation->PrintfLine(DriverStationLCD::kUser_Line4, &(convert.str()[0]));
+	std::ostringstream speedFactorConversion;
+	speedFactorConversion<<speedFactor;
+	string speedFactorOutput = "Speed Factor: " + speedFactorConversion.str();
+	driverStation->PrintfLine(DriverStationLCD::kUser_Line4, &(speedFactorOutput[0]));
 	driverStation->UpdateLCD();
 	
 }
@@ -118,9 +118,9 @@ void OperatorControl(void)
 
 	while (IsOperatorControl())
 	{
-		leftSpeed= components.gamepad1.GetLeftY()*(-1);
-		rightSpeed = components.gamepad1.GetRightY();
-		oneStick = components.gamepad1.GetDpadY();
+		leftSpeed= components.gamepad1.GetLeftY()*(-1) *speedFactor;
+		rightSpeed = components.gamepad1.GetRightY() *speedFactor;
+		oneStick = components.gamepad1.GetDpadY() *speedFactor;
 		//movement control 
 		if (components.gamepad1.GetRawButton(5))
 		{
@@ -152,7 +152,7 @@ void OperatorControl(void)
 			{
 				speedFactor = .5;
 			}
-			if(speedFactor == .5){
+			else if(speedFactor == .5){
 				speedFactor = 1;
 			}
 		}

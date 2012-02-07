@@ -56,7 +56,7 @@ public:
 void mechanismSet() //makes things look neater
 {
 	//Set the shooter
-/*	components.shooter.Set(shooterSpeed);
+	components.shooter.Set(shooterSpeed);
 	
 	//Driving Logic for One Stick Drive
 	if(oneStick == 0)
@@ -67,7 +67,7 @@ void mechanismSet() //makes things look neater
 		components.myRobot.TankDrive((oneStick * speedFactor)/2, -1*((speedFactor*oneStick)/2));
 	}
 	components.piston.Set(pistonPosition);
-	*/
+	
 	//Output data to the Driver Station
 	std::ostringstream convert;
 	convert<<sonarVal;

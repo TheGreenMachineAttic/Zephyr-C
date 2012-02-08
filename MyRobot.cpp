@@ -159,7 +159,7 @@ void OperatorControl(void)
 		sonarVal= sonarFilter.filter(components.sonar.GetValue())/2 + SONAR_OFFSET;  
 		//sonarVal = components.sonar.GetValue()/2;//sonar
 		mechanismSet();
-		Wait(0.005);
+		Wait(0.005);		//i failed at pushing
 		}
 	}
 };

@@ -163,5 +163,4 @@ void OperatorControl(void)
 		}
 	}
 };
-
 START_ROBOT_CLASS(RobotDemo);

@@ -4,34 +4,65 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
 
+/*
+ * This contains the complete list of all components attached to the robot or driver station.
+ */
 class Components{
 private:
-	static const int leftMotors = 3;
-	static const int rightMotors = 4;
-	static const int gamepad1Input = 1;
-	static const int gamepad2Input = 2;
-	static const int compInput = 1;
-	static const int compSpike = 1;
-	static const int shooterJaguar = 3;
-	static const int sonarInput = 1;
-	static const int pistonInput = 2;
+	//JAGUARS
+	static const int RIGHT_MOTOR = 1;
+	static const int LEFT_MOTOR = 2;
+	static const int SHOOTER_JAGUAR_LEFT  = 3;
+	static const int SHOOTER_JAGUAR_RIGHT = 4; 
+	static const int SHOOTER_ROTATION = 5;
+	//GAMEPADS
+	static const int GAMEPAD_INPUT_1 = 1;
+	static const int GAMEPAD_INPUT_2 = 2;
+	//RELAYS
+	static const int COMP_INPUT = 1;
+	static const int PISTON_INPUT = 2;
+	static const int SUPER_SHIFTERS = 3;
+	static const int BALL_COLL_ROTAT = 4;
+	static const int BALL_COLL_LIFT = 5;
+	static const int CONV_MOV = 6;
+	//ANALOG INPUTS
+	static const int SONAR_INPUT = 1;
+	//DIGITAL INPUT
+	static const int COMP_DIGITAL_INPUT = 1;
 public:
+		//ROBOT
 		RobotDrive myRobot;
+		//GAMEPADS
 		GamepadL gamepad1; 
 		GamepadL gamepad2;
-		Jaguar shooter;
+		//JAGUARS
+		Jaguar shooterRight;
+		Jaguar shooterLeft;
+		Jaguar shooterRotator;
+		//COMPRESSOR
 		Compressor comp;
-		Relay piston;
+		//RELAYS
+		Relay shooterPiston;
+		Relay superShifters;
+		Relay collectorRotate;
+		Relay liftCollector;
+		Relay convMove;
+		//ANALOG INPUTS
 		AnalogChannel sonar;
-
 		Components():
-			myRobot(leftMotors,rightMotors),
-			gamepad1(gamepad1Input),
-			gamepad2(gamepad2Input),
-			shooter(shooterJaguar),
-			comp(compInput,compSpike),
-			piston(pistonInput),
-			sonar(sonarInput)
+			myRobot(LEFT_MOTOR, RIGHT_MOTOR),
+			gamepad1(GAMEPAD_INPUT_1),
+			gamepad2(GAMEPAD_INPUT_2),
+			shooterRight(SHOOTER_JAGUAR_RIGHT),
+			shooterLeft(SHOOTER_JAGUAR_LEFT),
+			shooterRotator(SHOOTER_ROTATION),
+			comp(COMP_DIGITAL_INPUT,COMP_INPUT),
+			shooterPiston(PISTON_INPUT),
+			superShifters(SUPER_SHIFTERS),
+			collectorRotate(BALL_COLL_ROTAT),
+			liftCollector(BALL_COLL_LIFT),
+			convMove(CONV_MOV),
+			sonar(SONAR_INPUT)
 			{}
 
 			

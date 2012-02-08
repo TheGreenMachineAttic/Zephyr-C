@@ -18,7 +18,7 @@ class RobotDemo : public SimpleRobot
 	
 	//Shooter Speed
 	float shooterSpeed;
-	const float shooterStep;
+	const float SHOOTER_STEP;
 		
 	//Camera Variables
 	
@@ -41,30 +41,34 @@ public:
 		oneStick(0.0),
 		speedFactor(1.0),
 		shooterSpeed(0),
-		shooterStep(0.01),
+		SHOOTER_STEP(0.01),
 		sonarVal(0.0),
 		pistonPosition(Relay::kOff)
 	{
+		//Initialize more complex classes and set expiration while starting the compressor.
 		driverStation = DriverStationLCD::GetInstance();
 		components.myRobot.SetExpiration(0.1);
 		components.comp.Start();
 		components.myRobot.SetSafetyEnabled(true);
 	}
-
-void mechanismSet() //makes things look neater
+/*
+ * Set the motors and relays to the appropriate settings.
+ */
+void mechanismSet() 
 {
 	//Set the shooter
-	components.shooter.Set(shooterSpeed);
+	components.shooterLeft.Set(shooterSpeed);
+	components.shooterRight.Set(shooterSpeed);
 	
 	//Driving Logic for One Stick Drive
 	if(oneStick == 0)
 	{
-	components.myRobot.TankDrive(leftSpeed, rightSpeed);
+	components.myRobot.TankDrive(leftSpeed*speedFactor, rightSpeed*speedFactor);
 	}
 	else{
-		components.myRobot.TankDrive((oneStick * speedFactor)/2, -1*((speedFactor*oneStick)/2));
+		components.myRobot.TankDrive(oneStick * speedFactor, speedFactor*oneStick);
 	}
-	components.piston.Set(pistonPosition);
+	components.shooterPiston.Set(pistonPosition);
 	
 	//Output data to the Driver Station
 	std::ostringstream convert;
@@ -100,6 +104,9 @@ void Autonomous(void)
 	components.myRobot.Drive(0.0, 0.0);
 }
 
+/*
+ * Used to check whether the speed is in expected range
+ */
 float RegulateSpeed (float speed)
 {
 	if (speed > 1.0)
@@ -113,6 +120,9 @@ float RegulateSpeed (float speed)
 	return speed;
 }
 
+/*
+ * Collect data and update the various speed and relay values
+ */
 void OperatorControl(void)
 {
 
@@ -132,11 +142,11 @@ void OperatorControl(void)
 		//fires piston used in the shooter to feed the ball at a constant speed
 		if (components.gamepad1.GetRawButton(6))
 		{
-			shooterSpeed+=shooterStep;    //increaces the shooter speed
+			shooterSpeed+= SHOOTER_STEP;    //increaces the shooter speed
 		}
 		if (components.gamepad1.GetRawButton(8))
 		{
-			shooterSpeed -=shooterStep;   //lowers the shooter speed
+			shooterSpeed -= SHOOTER_STEP;   //lowers the shooter speed
 		}
 		if (components.gamepad1.GetRawButton(1))
 		{

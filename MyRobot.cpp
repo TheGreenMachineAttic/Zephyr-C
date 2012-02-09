@@ -194,15 +194,15 @@ void OperatorControl(void)
 		}
 		if (components.gamepad2.GetRawButton(1))
 		{
-			shooterSpeed=-1;    //turns the shooter on to full
+			shooterSpeed=1;    //turns the shooter on to full
 		}
 		if (components.gamepad2.GetRawButton(2))
 		{
-			shooterSpeed=50;     //turns the shooter off
+			shooterSpeed=.50;     //turns the shooter off
 		}
 		if(components.gamepad2.GetRawButton(3))
 		{
-			shooterSpeed = 40;
+			shooterSpeed = .40;
 		}
 		if(components.gamepad2.GetRawButton(4))
 		{

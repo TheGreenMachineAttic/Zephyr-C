@@ -19,16 +19,19 @@ class RobotDemo : public SimpleRobot
 	//Shooter Speed
 	float shooterSpeed;
 	const float SHOOTER_STEP;
-		
+	float shooterRotationSpeed;
 	//Camera Variables
 	
 	//Sonar Variables
 	float sonarVal;
 	Filter sonarFilter;
 	static const int SONAR_OFFSET = 5;
-	//Shooter Piston Variables
+	//Relays
 	Relay::Value pistonPosition;
-	
+	Relay::Value shifterPosition;
+	Relay::Value collectorSpin;
+	Relay::Value collectorLift;
+	Relay::Value convMove;
 	//Components
 	Components components;
 	
@@ -42,8 +45,13 @@ public:
 		speedFactor(1.0),
 		shooterSpeed(0),
 		SHOOTER_STEP(0.01),
+		shooterRotationSpeed(0),
 		sonarVal(0.0),
-		pistonPosition(Relay::kOff)
+		pistonPosition(Relay::kForward),
+		shifterPosition(Relay::kForward),
+		collectorSpin(Relay::kForward),
+		collectorLift(Relay::kForward),
+		convMove(Relay::kForward)
 	{
 		//Initialize more complex classes and set expiration while starting the compressor.
 		driverStation = DriverStationLCD::GetInstance();
@@ -68,18 +76,22 @@ void mechanismSet()
 	else{
 		components.myRobot.TankDrive(oneStick * speedFactor, speedFactor*oneStick);
 	}
+	//Set the relays
 	components.shooterPiston.Set(pistonPosition);
-	
+	components.liftCollector.Set(collectorLift);
+	components.convMove.Set(convMove);
+	components.collectorRotate.Set(collectorSpin);
+	components.superShifters.Set(shifterPosition);
 	//Output data to the Driver Station
 	std::ostringstream convert;
 	convert<<sonarVal;
 	string sonarOutput = "Sonar reads: " +  convert.str();
 	driverStation->PrintfLine(DriverStationLCD::kUser_Line2, &sonarOutput[0]);
 	driverStation->PrintfLine(DriverStationLCD::kUser_Line3, "Test Test");
-	std::ostringstream speedFactorConversion;
-	speedFactorConversion<<speedFactor;
-	string speedFactorOutput = "Speed Factor: " + speedFactorConversion.str();
-	driverStation->PrintfLine(DriverStationLCD::kUser_Line4, &(speedFactorOutput[0]));
+	std::ostringstream shooterSpeedConversion;
+	shooterSpeedConversion<<shooterSpeed;
+	string shooterSpeedOutput = "Shooter Speed: " + shooterSpeedConversion.str();
+	driverStation->PrintfLine(DriverStationLCD::kUser_Line4, &(shooterSpeedOutput[0]));
 	driverStation->UpdateLCD();
 	
 }
@@ -128,44 +140,76 @@ void OperatorControl(void)
 
 	while (IsOperatorControl())
 	{
+		//**********************DRIVER 1 CONTROLS*********************************//
 		leftSpeed= components.gamepad1.GetLeftY()*(-1) *speedFactor;
 		rightSpeed = components.gamepad1.GetRightY() *speedFactor;
 		oneStick = components.gamepad1.GetDpadY() *speedFactor;
-		//movement control 
-		if (components.gamepad1.GetRawButton(5))
+		if(button3Toggle.isToggleReady(components.gamepad1.GetRawButton(3)))
+				{
+					if(shifterPosition == Relay::kOff)
+					{
+						shifterPosition = Relay::kReverse;
+					}
+					else{
+						shifterPosition = Relay::kForward;
+					}
+				}
+		if(components.gamepad1.GetRawButton(5)){
+			collectorSpin  = Relay::kReverse;
+		}
+		else{
+			collectorSpin = Relay::kOff;
+		}
+		if(components.gamepad1.GetRawButton(7)){
+					convMove  = Relay::kReverse;
+				}
+		else{
+				convMove = Relay::kOff;
+			}
+		if(components.gamepad1.GetRawButton(6)){
+					collectorLift  = Relay::kReverse;
+				}
+		else if(components.gamepad1.GetRawButton(8)){
+					collectorLift = Relay::kForward;
+				}
+		else{
+			collectorLift = Relay::kOff;
+		}
+		//**********************DRIVER 2 CONTROLS*********************************//
+		if (components.gamepad2.GetRawButton(5))
 		{
 			pistonPosition = Relay::kReverse;
 		}
 		else{
-			pistonPosition = Relay::kForward;
+			pistonPosition = Relay::kOff;
 		}
 		//fires piston used in the shooter to feed the ball at a constant speed
-		if (components.gamepad1.GetRawButton(6))
+		if (components.gamepad2.GetRawButton(6))
 		{
 			shooterSpeed+= SHOOTER_STEP;    //increaces the shooter speed
 		}
-		if (components.gamepad1.GetRawButton(8))
+		if (components.gamepad2.GetRawButton(8))
 		{
 			shooterSpeed -= SHOOTER_STEP;   //lowers the shooter speed
 		}
-		if (components.gamepad1.GetRawButton(1))
+		if (components.gamepad2.GetRawButton(1))
 		{
 			shooterSpeed=-1;    //turns the shooter on to full
 		}
-		if (components.gamepad1.GetRawButton(2))
+		if (components.gamepad2.GetRawButton(2))
 		{
-			shooterSpeed=0;     //turns the shooter off
+			shooterSpeed=50;     //turns the shooter off
 		}
-		if(button3Toggle.isToggleReady(components.gamepad1.GetRawButton(3)))
+		if(components.gamepad2.GetRawButton(3))
 		{
-			if(speedFactor == 1)
-			{
-				speedFactor = .5;
-			}
-			else if(speedFactor == .5){
-				speedFactor = 1;
-			}
+			shooterSpeed = 40;
 		}
+		if(components.gamepad2.GetRawButton(4))
+		{
+			shooterSpeed = 0;
+		}
+		shooterRotationSpeed = components.gamepad2.GetRawAxis(1);	
+		
 		sonarVal= sonarFilter.filter(components.sonar.GetValue())/2 + SONAR_OFFSET;  
 		mechanismSet();
 		Wait(0.005);

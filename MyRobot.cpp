@@ -142,7 +142,7 @@ void OperatorControl(void)
 	{
 		//**********************DRIVER 1 CONTROLS*********************************//
 		leftSpeed= components.gamepad1.GetLeftY()*(-1) *speedFactor;
-		rightSpeed = components.gamepad1.GetRightY() *speedFactor;
+		rightSpeed = components.gamepad1.GetRightY()*(-1) *speedFactor;
 		oneStick = components.gamepad1.GetDpadY() *speedFactor;
 		if(button3Toggle.isToggleReady(components.gamepad1.GetRawButton(3)))
 				{

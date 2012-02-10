@@ -142,7 +142,7 @@ void OperatorControl(void)
 	{
 		//**********************DRIVER 1 CONTROLS*********************************//
 		leftSpeed= components.gamepad1.GetLeftY()*(-1) *speedFactor;
-		rightSpeed = components.gamepad1.GetRightY() *speedFactor;
+		rightSpeed = components.gamepad1.GetRightY()*(-1) *speedFactor;
 		oneStick = components.gamepad1.GetDpadY() *speedFactor;
 		if(button3Toggle.isToggleReady(components.gamepad1.GetRawButton(3)))
 				{
@@ -198,15 +198,15 @@ void OperatorControl(void)
 		}
 		if (components.gamepad2.GetRawButton(2))
 		{
-			shooterSpeed=.50;     //turns the shooter off
+			shooterSpeed=.50;     //turns the shooter to half
 		}
 		if(components.gamepad2.GetRawButton(3))
 		{
-			shooterSpeed = .40;
+			shooterSpeed = .40;		//sets the shooter to take a shot from the key
 		}
 		if(components.gamepad2.GetRawButton(4))
 		{
-			shooterSpeed = 0;
+			shooterSpeed = 0;		//turns the shooter off
 		}
 		shooterRotationSpeed = components.gamepad2.GetRawAxis(1);	
 		

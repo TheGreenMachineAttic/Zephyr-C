@@ -5,6 +5,7 @@
 #include "GamePadL.h"
 #include "WPILib.h"
 #include "DriveComponents.h"
+#include "ShooterComponents.h"
 /*
  * This contains the complete list of all components attached to the robot or driver station.
  */
@@ -31,8 +32,9 @@ private:
 	//DIGITAL INPUT
 	static const int COMP_DIGITAL_INPUT = 1;
 public:
-		//Wrapper Classes
+		//WRAPPER CLASSES
 		DrivingComponents drive;
+		ShooterComponents shooter;
 		//GAMEPADS
 		GamepadL gamepad1; 
 		GamepadL gamepad2;
@@ -46,6 +48,7 @@ public:
 		AnalogChannel sonar;
 		Components():
 			drive(LEFT_MOTOR, RIGHT_MOTOR, SUPER_SHIFTER),
+			shooter(SHOOTER_JAGUAR_LEFT, SHOOTER_JAGUAR_RIGHT, SHOOTER_ROTATION, PISTON_INPUT),
 			gamepad1(GAMEPAD_INPUT_1),
 			gamepad2(GAMEPAD_INPUT_2),
 			comp(COMP_DIGITAL_INPUT,COMP_INPUT),

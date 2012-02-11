@@ -29,7 +29,7 @@ public:
 	}
 	
 	void piston(bool position){
-		if(state){
+		if(position){
 			shooterPiston.Set(Relay::kReverse);
 		}
 		else{

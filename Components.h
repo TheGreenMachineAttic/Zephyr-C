@@ -29,6 +29,8 @@ private:
 	static const int SONAR_INPUT = 1;
 	//DIGITAL INPUT
 	static const int COMP_DIGITAL_INPUT = 1;
+	//SERVOS
+	static const int CAMERA_SERVO = 7;
 public:
 		//ROBOT
 		RobotDrive myRobot;
@@ -49,6 +51,8 @@ public:
 		Relay convMove;
 		//ANALOG INPUTS
 		AnalogChannel sonar;
+		//SERVOS
+		Servo cameraServo;
 		Components():
 			myRobot(LEFT_MOTOR, RIGHT_MOTOR),
 			gamepad1(GAMEPAD_INPUT_1),
@@ -62,7 +66,8 @@ public:
 			collectorRotate(BALL_COLL_ROTAT),
 			liftCollector(BALL_COLL_LIFT),
 			convMove(CONV_MOV),
-			sonar(SONAR_INPUT)
+			sonar(SONAR_INPUT),
+			cameraServo(CAMERA_SERVO)
 			{}
 
 			

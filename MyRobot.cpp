@@ -21,7 +21,8 @@ class RobotDemo : public SimpleRobot
 	const float SHOOTER_STEP;
 	float shooterRotationSpeed;
 	//Camera Variables
-	
+	float cameraServo;
+	static const float CAMERA_STEP = .05;
 	//Sonar Variables
 	float sonarVal;
 	Filter sonarFilter;
@@ -46,6 +47,7 @@ public:
 		shooterSpeed(0),
 		SHOOTER_STEP(0.01),
 		shooterRotationSpeed(0),
+		cameraServo(0.0),
 		sonarVal(0.0),
 		pistonPosition(Relay::kForward),
 		shifterPosition(Relay::kForward),
@@ -67,7 +69,6 @@ void mechanismSet()
 	//Set the shooter
 	components.shooterLeft.Set(shooterSpeed);
 	components.shooterRight.Set(shooterSpeed);
-	
 	//Driving Logic for One Stick Drive
 	if(oneStick == 0)
 	{
@@ -82,6 +83,8 @@ void mechanismSet()
 	components.convMove.Set(convMove);
 	components.collectorRotate.Set(collectorSpin);
 	components.superShifters.Set(shifterPosition);
+	//Servo Assignments
+	components.cameraServo.Set(cameraServo);
 	//Output data to the Driver Station
 	std::ostringstream convert;
 	convert<<sonarVal;
@@ -176,6 +179,12 @@ void OperatorControl(void)
 			collectorLift = Relay::kOff;
 		}
 		//**********************DRIVER 2 CONTROLS*********************************//
+		if(components.gamepad2.GetDpadY()==1){
+			cameraServo +=CAMERA_STEP;
+		}
+		else if(components.gamepad2.GetDpadY()==-1){
+			cameraServo-=CAMERA_STEP;
+		}
 		if (components.gamepad2.GetRawButton(5))
 		{
 			pistonPosition = Relay::kReverse;

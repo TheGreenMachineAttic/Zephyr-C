@@ -207,17 +207,17 @@ void OperatorControl(void)
 		}
 		if (components.gamepad2.GetRawButton(2))
 		{
-			shooterSpeed=.50;     //turns the shooter off
+			shooterSpeed=.50;     //turns the shooter to half
 		}
 		if(components.gamepad2.GetRawButton(3))
 		{
-			shooterSpeed = .40;
+			shooterSpeed = .40;		//sets the shooter to take a shot from the key
 		}
 		if(components.gamepad2.GetRawButton(4))
 		{
-			shooterSpeed = 0;
+			shooterSpeed = 0;		//turns the shooter off
 		}
-		shooterRotationSpeed = components.gamepad2.GetRawAxis(1);	
+		shooterRotationSpeed = components.gamepad2.GetRawAxis(3);	
 		
 		sonarVal= sonarFilter.filter(components.sonar.GetValue())/2 + SONAR_OFFSET;  
 		mechanismSet();

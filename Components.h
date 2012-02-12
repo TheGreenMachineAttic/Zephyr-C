@@ -6,14 +6,16 @@
 #include "WPILib.h"
 #include "DriveComponents.h"
 #include "ShooterComponents.h"
+#include "CollectorComponents.h"
+#include "SonarComponents.h"
 /*
  * This contains the complete list of all components attached to the robot or driver station.
  */
 class Components{
 private:
 	//JAGUARS
-	static int const  RIGHT_MOTOR = 1;
-	static int const  LEFT_MOTOR = 2;
+	static const int RIGHT_MOTOR = 1;
+	static const int LEFT_MOTOR = 2;
 	static const int SHOOTER_JAGUAR_LEFT  = 3;
 	static const int SHOOTER_JAGUAR_RIGHT = 4; 
 	static const int SHOOTER_ROTATION = 5;
@@ -23,39 +25,33 @@ private:
 	//RELAYS
 	static const int COMP_INPUT = 1;
 	static const int PISTON_INPUT = 2;
-	static int const  SUPER_SHIFTER = 3;
+	static const int SUPER_SHIFTER = 3;
 	static const int BALL_COLL_ROTAT = 4;
 	static const int BALL_COLL_LIFT = 5;
 	static const int CONV_MOV = 6;
-	//ANALOG INPUTS
-	static const int SONAR_INPUT = 1;
 	//DIGITAL INPUT
 	static const int COMP_DIGITAL_INPUT = 1;
+	//ANALOG INPUTS
+	static const int SONAR_INPUT = 1;
 public:
 		//WRAPPER CLASSES
 		DrivingComponents drive;
 		ShooterComponents shooter;
+		CollectorComponents collector;
+		SonarComponents sonar;
 		//GAMEPADS
 		GamepadL gamepad1; 
 		GamepadL gamepad2;
 		//COMPRESSOR
 		Compressor comp;
-		//RELAYS
-		Relay collectorRotate;
-		Relay liftCollector;
-		Relay convMove;
-		//ANALOG INPUTS
-		AnalogChannel sonar;
 		Components():
 			drive(LEFT_MOTOR, RIGHT_MOTOR, SUPER_SHIFTER),
 			shooter(SHOOTER_JAGUAR_LEFT, SHOOTER_JAGUAR_RIGHT, SHOOTER_ROTATION, PISTON_INPUT),
+			collector(BALL_COLL_ROTAT,BALL_COLL_LIFT,CONV_MOV),
+			sonar(SONAR_INPUT),
 			gamepad1(GAMEPAD_INPUT_1),
 			gamepad2(GAMEPAD_INPUT_2),
-			comp(COMP_DIGITAL_INPUT,COMP_INPUT),
-			collectorRotate(BALL_COLL_ROTAT),
-			liftCollector(BALL_COLL_LIFT),
-			convMove(CONV_MOV),
-			sonar(SONAR_INPUT)
+			comp(COMP_DIGITAL_INPUT,COMP_INPUT)
 			{}
 
 			

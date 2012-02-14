@@ -24,8 +24,12 @@ public:
 			superShifters.Set(Relay::kReverse);
 		}
 	}
-		
-	
+	void SetExpiration(float ex){
+		myRobot.SetExpiration(ex);
+	}
+	void SetSafetyEnabled(bool er){
+		myRobot.SetSafetyEnabled(er);
+	}
 };
 
 #endif

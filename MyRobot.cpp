@@ -55,9 +55,9 @@ public:
 	{
 		//Initialize more complex classes and set expiration while starting the compressor.
 		driverStation = DriverStationLCD::GetInstance();
-		components.myRobot.SetExpiration(0.1);
+		components.drive.SetExpiration(0.1);
 		components.comp.Start();
-		components.myRobot.SetSafetyEnabled(true);
+		components.drive.SetSafetyEnabled(true);
 	}
 /*
  * Set the motors and relays to the appropriate settings.
@@ -110,10 +110,10 @@ void stop()
 //DON"T RUN THIS. SERIOUSLY BAD IDEA
 void Autonomous(void)
 {
-	components.myRobot.SetSafetyEnabled(false);
-	components.myRobot.Drive(0.5, 0.0); 
+	components.drive.SetSafetyEnabled(false);
+	components.drive.Drive(0.5, 0.0); 
 	Wait(20.0); //    for 2 seconds
-	components.myRobot.Drive(0.0, 0.0);
+	components.drive.Drive(0.0, 0.0);
 }
 
 /*

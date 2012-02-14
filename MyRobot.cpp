@@ -3,6 +3,8 @@
 #include "Components.h"
 #include "ToggleButtonHelper.h"
 #include "Filter.h"
+#include "AutoManager.h"
+#include "ShootStep.h"
 #include <sstream>
 
 class RobotDemo : public SimpleRobot
@@ -111,12 +113,18 @@ void stop()
 	mechanismSet();
 }
 //DON"T RUN THIS. SERIOUSLY BAD IDEA
-void Autonomous(void)
+void Autonomous()
 {
-	components.myRobot.SetSafetyEnabled(false);
-	components.myRobot.Drive(0.5, 0.0); 
-	Wait(20.0); //    for 2 seconds
-	components.myRobot.Drive(0.0, 0.0);
+	AutoManager manager;
+	manager.add(ShooterStep(&components));
+	while(IsAutonomous()&&IsEnabled()){
+		AutoStep currentStep = manager.getNextStep();
+		currentStep.start();
+		while(currentStep.isRunning()){
+			currentStep.run();
+		}
+		currentStep.stop();
+	}
 }
 
 /*
@@ -225,5 +233,4 @@ void OperatorControl(void)
 		}
 	}
 };
-
 START_ROBOT_CLASS(RobotDemo);

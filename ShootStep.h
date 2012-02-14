@@ -3,7 +3,7 @@
 #include "AutoStep.h"
 #include "Components.h"
 
-class ShooterStep:AutoStep{
+class ShooterStep:public AutoStep{
 public:
 	void run();
 	bool isRunning(){return false;};
@@ -11,7 +11,6 @@ public:
 	ShooterStep(Components* comp);
 private:
 	Components *robot;
-	virtual ~ShooterStep(){delete robot;};
 };
 
 #endif

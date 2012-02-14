@@ -45,6 +45,8 @@ public:
 		//GAMEPADS
 		GamepadL gamepad1; 
 		GamepadL gamepad2;
+		//SERVO
+		Servo cameraServo;
 		//COMPRESSOR
 		Compressor comp;
 
@@ -56,6 +58,7 @@ public:
 			sonar(SONAR_INPUT),
 			gamepad1(GAMEPAD_INPUT_1),
 			gamepad2(GAMEPAD_INPUT_2),
+			cameraServo(CAMERA_SERVO),
 			comp(COMP_DIGITAL_INPUT, COMP_INPUT)
 			
 			{}

@@ -30,11 +30,11 @@ class RobotDemo : public SimpleRobot
 	Filter sonarFilter;
 	static const int SONAR_OFFSET = 5;
 	//Relays
-	Relay::Value pistonPosition;
-	Relay::Value shifterPosition;
-	Relay::Value collectorSpin;
-	Relay::Value collectorLift;
-	Relay::Value convMove;
+	bool pistonPosition;
+	bool shifterPosition;
+	bool collectorSpin;
+	int collectorLift;
+	bool convMove;
 	//Components
 	Components components;
 	
@@ -85,7 +85,7 @@ void mechanismSet()
 	components.collector.spin(collectorSpin);
 	components.drive.shift(shifterPosition);
 	//Servo Assignments
-	//components.cameraServo.Set(cameraServo);
+	components.cameraServo.Set(cameraServo);
 	//Output data to the Driver Station
 	std::ostringstream convert;
 	convert<<sonarVal;
@@ -150,39 +150,33 @@ void OperatorControl(void)
 	while (IsOperatorControl())
 	{
 		//**********************DRIVER 1 CONTROLS*********************************//
-		leftSpeed= components.gamepad1.GetLeftY()*(-1) *speedFactor;
-		rightSpeed = components.gamepad1.GetRightY()*(-1) *speedFactor;
-		oneStick = components.gamepad1.GetDpadY() *speedFactor;
+		leftSpeed= components.gamepad1.GetLeftY()*(-1);
+		rightSpeed = components.gamepad1.GetRightY()*(-1);
+		oneStick = components.gamepad1.GetDpadY();
 		if(button3Toggle.isToggleReady(components.gamepad1.GetRawButton(3)))
 				{
-					if(shifterPosition == Relay::kOff)
-					{
-						shifterPosition = Relay::kReverse;
-					}
-					else{
-						shifterPosition = Relay::kForward;
-					}
+					shifterPosition = !shifterPosition;
 				}
 		if(components.gamepad1.GetRawButton(5)){
-			collectorSpin  = Relay::kReverse;
+			collectorSpin  = true;
 		}
 		else{
-			collectorSpin = Relay::kOff;
+			collectorSpin = false;
 		}
 		if(components.gamepad1.GetRawButton(7)){
-					convMove  = Relay::kReverse;
+					convMove  = true;
 				}
 		else{
-				convMove = Relay::kOff;
+				convMove = false;
 			}
 		if(components.gamepad1.GetRawButton(6)){
-					collectorLift  = Relay::kReverse;
+					collectorLift  = 1;
 				}
 		else if(components.gamepad1.GetRawButton(8)){
-					collectorLift = Relay::kForward;
+					collectorLift = -1;
 				}
 		else{
-			collectorLift = Relay::kOff;
+			collectorLift = 0;
 		}
 		//**********************DRIVER 2 CONTROLS*********************************//
 		if(components.gamepad2.GetDpadY()==1){
@@ -193,10 +187,10 @@ void OperatorControl(void)
 		}
 		if (components.gamepad2.GetRawButton(5))
 		{
-			pistonPosition = Relay::kReverse;
+			pistonPosition = true;
 		}
 		else{
-			pistonPosition = Relay::kOff;
+			pistonPosition = false;
 		}
 		//fires piston used in the shooter to feed the ball at a constant speed
 		if (components.gamepad2.GetRawButton(6))

@@ -17,6 +17,7 @@ class SonarComponents{
 			sonar(channel)
 			{}
 	
+
 		double getFilteredValue(){
 			return sonarFilter.filter(sonar.GetValue())/2+CONSTANT_SONAR;
 		}
@@ -24,6 +25,7 @@ class SonarComponents{
 		double getRawValue(int value){
 			return sonar.GetValue()/2+CONSTANT_SONAR;
 		}
+		
 		
 		double getPower(){
 			return 0.0;

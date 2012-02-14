@@ -8,16 +8,16 @@
 	void ShooterStep::run(){
 		for(int time = 0; time <2000; time++)
 		{
-		robot->shooter.Set(-1);
+		robot->shooter.setShooterSpeed(-1);
 		sleep(1);
 		}
 		for(int time = 0; time <1000; time++)
 		{
-			robot->piston.Set(Relay::kReverse);
+			robot->shooter.piston(true);
 		}
-		robot->piston.Set(Relay::kForward);
+		robot->shooter.piston(false);
 	}
 	void ShooterStep::stop(){
-		robot->shooter.Set(0);
-		robot->piston.Set(Relay::kForward);
+		robot->shooter.setShooterSpeed(0);
+		robot->shooter.piston(false);
 	}

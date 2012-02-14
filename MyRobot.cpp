@@ -59,9 +59,9 @@ public:
 	{
 		//Initialize more complex classes and set expiration while starting the compressor.
 		driverStation = DriverStationLCD::GetInstance();
-		components.myRobot.SetExpiration(0.1);
+		components.drive.SetExpiration(0.1);
 		components.comp.Start();
-		components.myRobot.SetSafetyEnabled(true);
+		components.drive.SetSafetyEnabled(true);
 	}
 /*
  * Set the motors and relays to the appropriate settings.
@@ -69,24 +69,23 @@ public:
 void mechanismSet() 
 {
 	//Set the shooter
-	components.shooterLeft.Set(shooterSpeed);
-	components.shooterRight.Set(shooterSpeed);
+	components.shooter.setShooterSpeed(shooterSpeed);
 	//Driving Logic for One Stick Drive
 	if(oneStick == 0)
 	{
-	components.myRobot.TankDrive(leftSpeed*speedFactor, rightSpeed*speedFactor);
+	components.drive.setDrivingSpeed(leftSpeed*speedFactor, rightSpeed*speedFactor);
 	}
 	else{
-		components.myRobot.TankDrive(oneStick * speedFactor, speedFactor*oneStick);
+		components.drive.setDrivingSpeed(oneStick * speedFactor, speedFactor*oneStick);
 	}
 	//Set the relays
-	components.shooterPiston.Set(pistonPosition);
-	components.liftCollector.Set(collectorLift);
-	components.convMove.Set(convMove);
-	components.collectorRotate.Set(collectorSpin);
-	components.superShifters.Set(shifterPosition);
+	components.shooter.piston(pistonPosition);
+	components.collector.lift(collectorLift);
+	components.collector.belt(convMove);
+	components.collector.spin(collectorSpin);
+	components.drive.shift(shifterPosition);
 	//Servo Assignments
-	components.cameraServo.Set(cameraServo);
+	//components.cameraServo.Set(cameraServo);
 	//Output data to the Driver Station
 	std::ostringstream convert;
 	convert<<sonarVal;
@@ -126,7 +125,6 @@ void Autonomous()
 		currentStep.stop();
 	}
 }
-
 /*
  * Used to check whether the speed is in expected range
  */
@@ -227,7 +225,7 @@ void OperatorControl(void)
 		}
 		shooterRotationSpeed = components.gamepad2.GetRawAxis(3);	
 		
-		sonarVal= sonarFilter.filter(components.sonar.GetValue())/2 + SONAR_OFFSET;  
+		sonarVal= components.sonar.getFilteredValue();  
 		mechanismSet();
 		Wait(0.005);
 		}

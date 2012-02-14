@@ -111,7 +111,7 @@ void stop()
 	
 	mechanismSet();
 }
-//DON"T RUN THIS. SERIOUSLY BAD IDEA
+
 void Autonomous()
 {
 	AutoManager manager;

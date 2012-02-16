@@ -164,11 +164,11 @@ void OperatorControl(void)
 			collectorSpin = false;
 		}
 		if(components.gamepad1.GetRawButton(7)){
-					convMove  = true;
-				}
-		else{
-				convMove = false;
+			convMove = -1;
 			}
+		if(components.gamepad1.GetRawButton(2)){
+			convMove = 1;
+		}
 		if(components.gamepad1.GetRawButton(6)){
 					collectorLift  = 1;
 				}

@@ -34,7 +34,7 @@ class RobotDemo : public SimpleRobot
 	bool shifterPosition;
 	bool collectorSpin;
 	int collectorLift;
-	bool convMove;
+	float convMove;
 	//Components
 	Components components;
 	
@@ -55,7 +55,7 @@ public:
 		shifterPosition(Relay::kForward),
 		collectorSpin(Relay::kForward),
 		collectorLift(Relay::kForward),
-		convMove(Relay::kForward)
+		convMove(0.0)
 	{
 		//Initialize more complex classes and set expiration while starting the compressor.
 		driverStation = DriverStationLCD::GetInstance();

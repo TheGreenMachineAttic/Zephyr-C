@@ -7,10 +7,16 @@
  */
 class ToggleHelper{
 public:
+	/*
+	 * Constructs ToggleHelper with toggleReady equal to false.
+	 */
 	ToggleHelper()
 	{
 		toggleReady = false;
 	}
+	/*
+	 * Returns true if the latests state is both true and different from toggle ready.
+	 */
 	bool isToggleReady(bool latestState)
 	{
 		if(!latestState){

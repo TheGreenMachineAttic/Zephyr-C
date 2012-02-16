@@ -19,6 +19,8 @@ private:
 	static const int SHOOTER_JAGUAR_LEFT  = 3;
 	static const int SHOOTER_JAGUAR_RIGHT = 4; 
 	static const int SHOOTER_ROTATION = 5;
+	static const int CONV_MOV = 6;
+	
 	//GAMEPADS
 	static const int GAMEPAD_INPUT_1 = 1;
 	static const int GAMEPAD_INPUT_2 = 2;
@@ -28,7 +30,6 @@ private:
 	static const int SUPER_SHIFTER = 3;
 	static const int BALL_COLL_ROTAT = 4;
 	static const int BALL_COLL_LIFT = 5;
-	static const int CONV_MOV = 6;
 	//DIGITAL INPUT
 	static const int COMP_DIGITAL_INPUT = 1;
 	//SERVOS

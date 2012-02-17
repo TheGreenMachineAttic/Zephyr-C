@@ -217,7 +217,8 @@ void OperatorControl(void)
 		{
 			shooterSpeed = 0;		//turns the shooter off
 		}
-		shooterRotationSpeed = components.gamepad2.GetRawAxis(3);	
+		
+		shooterRotationSpeed = components.gamepad2.GetRawAxis(3);
 		
 		sonarVal= components.sonar.getFilteredValue();  
 		mechanismSet();

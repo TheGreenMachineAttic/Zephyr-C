@@ -36,6 +36,8 @@ private:
 	//ANALOG INPUTS
 	static const int SONAR_INPUT = 1;
 
+	
+	
 public:
 		//WRAPPER CLASSES
 		DrivingComponents drive;
@@ -49,7 +51,6 @@ public:
 		Servo cameraServo;
 		//COMPRESSOR
 		Compressor comp;
-
 
 		Components():
 			drive(LEFT_MOTOR, RIGHT_MOTOR, SUPER_SHIFTER),

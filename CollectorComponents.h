@@ -8,7 +8,7 @@ class CollectorComponents{
 private:
 	Relay collectorRotate;
 	Relay liftCollector;
-	Relay convMove;
+	Jaguar convMove;
 public:
 	CollectorComponents(int spin, int lift, int belt):
 		collectorRotate(spin),
@@ -39,14 +39,9 @@ public:
 		}
 	}
 	
-	void belt(bool convState){
-		if(convState){
-			convMove.Set(Relay::kReverse);
+	void belt(float speed){
+		convMove.SetSpeed(speed);
 		}
-		else{
-			convMove.Set(Relay::kOff);
-		}
-	}
 };
 
 #endif

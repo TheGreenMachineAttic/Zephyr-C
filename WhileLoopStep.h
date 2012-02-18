@@ -1,6 +1,10 @@
 #include "WPILib.h"
+#include "CounterCondition.h"
 #include "AutoStep.h"
 #include "LoopCondition.h"
+
+#ifndef WHILE_LOOP_STEP_H
+#define WHILE_LOOP_STEP_H
 
 class WhileLoopStep{
 
@@ -36,3 +40,5 @@ class WhileLoopStep{
 			return loopCondition.get();
 		}
 };
+
+#endif

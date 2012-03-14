@@ -12,9 +12,9 @@ class ForLoopStep : public WhileLoopStep{
 		int numRuns;
 	
 	public:
-		ForLoopStep(AutoStep repeatedStep, int numRuns){
-			super(repeatedStep, new CounterCondition.get(numRuns));
-		}
+		ForLoopStep(AutoStep repeatedStep, int numRuns):
+			WhileLoopStep(repeatedStep, CounterCondition.get(numRuns))
+		{}
 	
 };
 

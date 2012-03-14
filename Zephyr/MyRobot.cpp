@@ -59,9 +59,9 @@ public:
 	{
 		//Initialize more complex classes and set expiration while starting the compressor.
 		driverStation = DriverStationLCD::GetInstance();
-		components.drive.SetExpiration(0.1);
+		components.drive.setExpiration(0.1);
 		components.comp.Start();
-		components.drive.SetSafetyEnabled(true);
+		components.drive.setSafetyEnabled(true);
 	}
 /*
  * Set the motors and relays to the appropriate settings.
@@ -115,21 +115,7 @@ void stop()
 void Autonomous()
 {
 }
-/*
- * Used to check whether the speed is in expected range
- */
-float RegulateSpeed (float speed)
-{
-	if (speed > 1.0)
-	{
-		speed = 1.0;
-	} 
-	if (speed < -1.0)
-	{
-		speed = -1.0;
-	}
-	return speed;
-}
+
 
 /*
  * Collect data and update the various speed and relay values

@@ -5,7 +5,7 @@
 
 class BooleanCondition{
 	public:
-		bool get;
+		bool virtual get(){}
 	
 };
 

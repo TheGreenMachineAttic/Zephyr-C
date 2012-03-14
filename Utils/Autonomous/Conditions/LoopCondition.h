@@ -4,9 +4,9 @@
 #ifndef LOOP_CONDITION_H
 #define LOOP_CONDITION_H
 
-class LoopCondition{
+class LoopCondition : public BoolCondition{
 	public:
-		void reset;
+		void virtual reset(){}
 
 };
 	

@@ -3,17 +3,16 @@
 #ifndef COUNTER_CONDITION_H
 #define COUNTER_CONDITION_H
 
-class CounterCondition{
+class CounterCondition: public LoopCondition{
 	private:
 		int countTo;
 		int value;
 	
 	public:
 		CounterCondition(int countTo){
-			this.countTo=countTo;
+			this->countTo=countTo;
 			value=0;
 		}
-		
 		bool get(){
 			return value<countTo;
 		}

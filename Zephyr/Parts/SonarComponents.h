@@ -3,7 +3,7 @@
 #define SONAR_COMPONENTS_H
 
 #include "WPILib.h"
-#include "..\Zephyr-C\Utils\Filters\Filter.h"
+#include "Utils\Filters\Filter.h"
 
 class SonarComponents{
 	

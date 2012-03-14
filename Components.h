@@ -36,9 +36,19 @@ private:
 	static const int CAMERA_SERVO = 7;
 	//ANALOG INPUTS
 	static const int SONAR_INPUT = 1;
-
 	
-	
+	Components():
+				drive(LEFT_MOTOR, RIGHT_MOTOR, SUPER_SHIFTER),
+				shooter(SHOOTER_JAGUAR_LEFT, SHOOTER_JAGUAR_RIGHT, SHOOTER_ROTATION, PISTON_INPUT),
+				collector(BALL_COLL_ROTAT,BALL_COLL_LIFT,CONV_MOV),
+				sonar(SONAR_INPUT),
+				gamepad1(GAMEPAD_INPUT_1),
+				gamepad2(GAMEPAD_INPUT_2),
+				cameraServo(CAMERA_SERVO),
+				comp(COMP_DIGITAL_INPUT, COMP_INPUT)
+				
+				{}
+		
 public:
 		//WRAPPER CLASSES
 		DrivingComponents drive;
@@ -52,18 +62,12 @@ public:
 		Servo cameraServo;
 		//COMPRESSOR
 		Compressor comp;
-
-		Components():
-			drive(LEFT_MOTOR, RIGHT_MOTOR, SUPER_SHIFTER),
-			shooter(SHOOTER_JAGUAR_LEFT, SHOOTER_JAGUAR_RIGHT, SHOOTER_ROTATION, PISTON_INPUT),
-			collector(BALL_COLL_ROTAT,BALL_COLL_LIFT,CONV_MOV),
-			sonar(SONAR_INPUT),
-			gamepad1(GAMEPAD_INPUT_1),
-			gamepad2(GAMEPAD_INPUT_2),
-			cameraServo(CAMERA_SERVO),
-			comp(COMP_DIGITAL_INPUT, COMP_INPUT)
-			
-			{}
+		
+		static Components& getInstance(){
+			static Components privateInstance;
+			return privateInstance;
+		}
+		
 
 			
 };

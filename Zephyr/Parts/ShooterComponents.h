@@ -19,23 +19,11 @@ public:
 		shooterPiston(piston)
 		{}
 	
-	void setShooterSpeed(float speed){
-		 shooterLeft.SetSpeed(speed);
-		 shooterRight.SetSpeed(-speed);
-	}
+	void setShooterSpeed(float speed);
 	
-	void setRotate(float rotator){
-		shooterRotator.SetSpeed(rotator);
-	}
+	void setRotate(float rotator);
 	
-	void piston(bool position){
-		if(position){
-			shooterPiston.Set(Relay::kReverse);
-		}
-		else{
-			shooterPiston.Set(Relay::kForward);
-		}
-	}
+	void piston(bool position);
 
 };
 

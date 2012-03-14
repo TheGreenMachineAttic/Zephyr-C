@@ -16,32 +16,11 @@ public:
 		convMove(belt)
 	{}
 	
-	void lift(int directionLift){
-		switch(directionLift){
-					case 1:
-						liftCollector.Set(Relay::kForward);
-						break;
-					case 2:
-						liftCollector.Set(Relay::kReverse);
-						break;
-					default:
-						liftCollector.Set(Relay::kOff);
-						break;
-		}
-	}
+	void lift(int directionLift);
 	
-	void spin(bool rotateState){
-		if(rotateState){
-			collectorRotate.Set(Relay::kReverse);
-		}
-		else{
-			collectorRotate.Set(Relay::kOff);
-		}
-	}
+	void spin(bool rotateState);
 	
-	void belt(float speed){
-		convMove.SetSpeed(speed);
-		}
+	void belt(float speed);
 };
 
 #endif

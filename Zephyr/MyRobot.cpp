@@ -4,7 +4,6 @@
 #include "..\Utils\Gamepad\ToggleButtonHelper.h"
 #include "..\Utils\Filters\Filter.h"
 #include "..\Utils\Autonomous\AutoManager.h"
-#include "Autonomous\ShootStep.h"
 #include <sstream>
 
 class RobotDemo : public SimpleRobot
@@ -115,16 +114,6 @@ void stop()
 
 void Autonomous()
 {
-	AutoManager manager;
-	manager.add(ShooterStep(&components));
-	while(IsAutonomous()&&IsEnabled()){
-		AutoStep currentStep = manager.getNextStep();
-		currentStep.start();
-		while(currentStep.isRunning()){
-			currentStep.run();
-		}
-		currentStep.stop();
-	}
 }
 /*
  * Used to check whether the speed is in expected range

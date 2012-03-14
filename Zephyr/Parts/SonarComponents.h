@@ -1,8 +1,9 @@
-#include "WPILib.h"
-#include "..\Utils\Filter.h"
 
 #ifndef SONAR_COMPONENTS_H
 #define SONAR_COMPONENTS_H
+
+#include "WPILib.h"
+#include "..\Zephyr-C\Utils\Filters\Filter.h"
 
 class SonarComponents{
 	
@@ -23,15 +24,11 @@ class SonarComponents{
 		/*
 		 * Returns the newest value viltered by the FIR Filter.
 		 */
-		double getFilteredValue(){
-			return sonarFilter.filter(sonar.GetValue())/2+CONSTANT_SONAR;
-		}
+		double getFilteredValue();
 		/*
 		 * Returns the raw unfiltered value.
 		 */
-		double getRawValue(int value){
-			return sonar.GetValue()/2+CONSTANT_SONAR;
-		}
+		double getRawValue(int value);
 		
 		/*
 		 * Returns the recommended power as decided by our manually calibrated distance to power curve.

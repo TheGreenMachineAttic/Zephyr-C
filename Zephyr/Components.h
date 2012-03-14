@@ -4,10 +4,10 @@
 #define COMPONENTS_H
 #include "..\Utils\Gamepad\GamePadL.h"
 #include "WPILib.h"
-#include "DriveComponents.h"
-#include "ShooterComponents.h"
-#include "CollectorComponents.h"
-#include "SonarComponents.h"
+#include "Parts\DriveComponents.h"
+#include "Parts\ShooterComponents.h"
+#include "Parts\CollectorComponents.h"
+#include "Parts\SonarComponents.h"
 /*
  * This contains the complete list of all components attached to the robot or driver station.
  */
@@ -51,7 +51,7 @@ private:
 		
 public:
 		//WRAPPER CLASSES
-		DrivingComponents drive;
+		DriveComponents drive;
 		ShooterComponents shooter;
 		CollectorComponents collector;
 		SonarComponents sonar;

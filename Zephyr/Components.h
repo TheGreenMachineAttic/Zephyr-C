@@ -2,7 +2,7 @@
 
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
-#include "GamePadL.h"
+#include "..\Utils\Gamepad\GamePadL.h"
 #include "WPILib.h"
 #include "DriveComponents.h"
 #include "ShooterComponents.h"

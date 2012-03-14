@@ -1,10 +1,10 @@
 #include "WPILib.h"
-#include "GamePadL.h"
+#include "..\Utils\Gamepad\GamePadL.h"
 #include "Components.h"
-#include "ToggleButtonHelper.h"
-#include "Filter.h"
-#include "AutoManager.h"
-#include "ShootStep.h"
+#include "..\Utils\Gamepad\ToggleButtonHelper.h"
+#include "..\Utils\Filters\Filter.h"
+#include "..\Utils\Autonomous\AutoManager.h"
+#include "Autonomous\ShootStep.h"
 #include <sstream>
 
 class RobotDemo : public SimpleRobot
@@ -151,6 +151,7 @@ void OperatorControl(void)
 	while (IsOperatorControl())
 	{
 		//**********************DRIVER 1 CONTROLS*********************************//
+		//Drive Controls
 		leftSpeed= components.gamepad1.GetLeftY()*(-1);
 		rightSpeed = components.gamepad1.GetRightY()*(-1);
 		oneStick = components.gamepad1.GetDpadY();
@@ -158,18 +159,21 @@ void OperatorControl(void)
 				{
 					shifterPosition = !shifterPosition;
 				}
+		//Spinner Controls
 		if(components.gamepad1.GetRawButton(5)){
 			collectorSpin  = true;
 		}
 		else{
 			collectorSpin = false;
 		}
+		//Conveyor Movement
 		if(components.gamepad1.GetRawButton(7)){
 			convMove = -1;
 			}
-		if(components.gamepad1.GetRawButton(2)){
+		else if(components.gamepad1.GetRawButton(2)){
 			convMove = 1;
 		}
+		//Collector Lift
 		if(components.gamepad1.GetRawButton(6)){
 					collectorLift  = 1;
 				}
